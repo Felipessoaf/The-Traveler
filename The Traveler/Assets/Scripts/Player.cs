@@ -59,7 +59,6 @@ public class Player : MonoBehaviour {
 
     void Stationary()
     {
-        Debug.Log("Stationary");
         if (GameManager.GameRunnning)
         {
             if(Input.GetKeyDown(KeyCode.RightArrow))
@@ -89,7 +88,6 @@ public class Player : MonoBehaviour {
 
     void SetStationary()
     {
-        Debug.Log("SetStationary");
         _currentState = State.stationary;
     }
 }

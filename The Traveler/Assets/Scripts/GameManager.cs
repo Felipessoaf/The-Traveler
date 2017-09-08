@@ -26,7 +26,6 @@ public class GameManager : MonoBehaviour {
 
     public void StartGame()
     {
-        Debug.Log("StartGame");
         GameRunnning = true;
     }
 }
