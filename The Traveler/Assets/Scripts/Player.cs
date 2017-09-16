@@ -61,9 +61,25 @@ public class Player : MonoBehaviour {
     {
         if (GameManager.GameRunnning)
         {
+            Debug.Log("Stationary");
             if(Input.GetKeyDown(KeyCode.RightArrow))
             {
                 _currentState = State.walking;
+            }
+            else if(Input.GetKeyDown(KeyCode.UpArrow))
+            {
+                _animator.SetBool("TurnUp", true);
+                _currentState = State.turning;
+            }
+            else if (Input.GetKeyDown(KeyCode.LeftArrow))
+            {
+                _animator.SetBool("TurnLeft", true);
+                _currentState = State.turning;
+            }
+            else if (Input.GetKeyDown(KeyCode.DownArrow))
+            {
+                _animator.SetBool("TurnDown", true);
+                _currentState = State.turning;
             }
         }
     }
@@ -83,11 +99,20 @@ public class Player : MonoBehaviour {
 
     void Turning()
     {
-
+        Debug.Log("Turning");
     }
 
     void SetStationary()
     {
+        Debug.Log("SetStat");
         _currentState = State.stationary;
+    }
+
+    void SetWalking()
+    {
+        _animator.SetBool("TurnUp", false);
+        _animator.SetBool("TurnLeft", false);
+        _animator.SetBool("TurnDown", false);
+        _currentState = State.walking;
     }
 }
