@@ -12,10 +12,19 @@ public class Player : MonoBehaviour {
         walking,
         turning
     }
+
+    enum Direction
+    {
+        up,
+        down,
+        left,
+        right
+    }
     #endregion
 
     #region private variables
     private State _currentState;
+    private Direction _currentDirection;
     [SerializeField]
     private Animator _animator;
     #endregion
@@ -28,6 +37,7 @@ public class Player : MonoBehaviour {
     void Start ()
     {
         _currentState = State.menuWalk;
+        _currentDirection = Direction.right;
 	}
 	
 	// Update is called once per frame
@@ -64,22 +74,55 @@ public class Player : MonoBehaviour {
             Debug.Log("Stationary");
             if(Input.GetKeyDown(KeyCode.RightArrow))
             {
-                _currentState = State.walking;
+                if(_currentDirection != Direction.right)
+                {
+                    _animator.SetBool("TurnRight", true);
+                    _currentState = State.turning;
+                    _currentDirection = Direction.right;
+                }
+                else
+                {
+                    _currentState = State.walking;
+                }
             }
             else if(Input.GetKeyDown(KeyCode.UpArrow))
             {
-                _animator.SetBool("TurnUp", true);
-                _currentState = State.turning;
+                if (_currentDirection != Direction.up)
+                {
+                    _animator.SetBool("TurnUp", true);
+                    _currentState = State.turning;
+                    _currentDirection = Direction.up;
+                }
+                else
+                {
+                    _currentState = State.walking;
+                }
             }
             else if (Input.GetKeyDown(KeyCode.LeftArrow))
             {
-                _animator.SetBool("TurnLeft", true);
-                _currentState = State.turning;
+                if (_currentDirection != Direction.left)
+                {
+                    _animator.SetBool("TurnLeft", true);
+                    _currentState = State.turning;
+                    _currentDirection = Direction.left;
+                }
+                else
+                {
+                    _currentState = State.walking;
+                }
             }
             else if (Input.GetKeyDown(KeyCode.DownArrow))
             {
-                _animator.SetBool("TurnDown", true);
-                _currentState = State.turning;
+                if (_currentDirection != Direction.down)
+                {
+                    _animator.SetBool("TurnDown", true);
+                    _currentState = State.turning;
+                    _currentDirection = Direction.down;
+                }
+                else
+                {
+                    _currentState = State.walking;
+                }
             }
         }
     }
@@ -113,6 +156,7 @@ public class Player : MonoBehaviour {
         _animator.SetBool("TurnUp", false);
         _animator.SetBool("TurnLeft", false);
         _animator.SetBool("TurnDown", false);
+        _animator.SetBool("TurnRight", false);
         _currentState = State.walking;
     }
 }
