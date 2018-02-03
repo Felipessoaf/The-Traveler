@@ -41,6 +41,7 @@ public class Player : MonoBehaviour {
     #region public variables
     public float Speed;
     public Vector3 Velocity;
+    public CamController CamCtrl;
 
     #endregion
 
@@ -184,12 +185,13 @@ public class Player : MonoBehaviour {
 
     void Turning()
     {
-        Debug.Log("Turning");
+        //Debug.Log("Turning");
     }
 
     void SetStationary()
     {
-        Debug.Log("SetStat");
+        //Debug.Log("SetStat");
+        CamCtrl.FollowPlayer();
         _currentState = State.stationary;
     }
 
