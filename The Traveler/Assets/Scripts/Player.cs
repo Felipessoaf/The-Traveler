@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Player : MonoBehaviour {
 
@@ -11,6 +9,13 @@ public class Player : MonoBehaviour {
         stationary,
         walking,
         turning
+    }
+
+    enum WalkingState
+    {
+        walking,
+        slowing,
+        stop
     }
 
     enum Direction
@@ -25,19 +30,27 @@ public class Player : MonoBehaviour {
     #region private variables
     private State _currentState;
     private Direction _currentDirection;
+    private WalkingState _currentWalkingState;
+    private Rigidbody _rb;
     [SerializeField]
     private Animator _animator;
+    private float _frac;
+    private bool _moving;
     #endregion
 
     #region public variables
+    public float Speed;
 
     #endregion
 
     // Use this for initialization
     void Start ()
     {
+        _rb = gameObject.GetComponent<Rigidbody>();
         _currentState = State.menuWalk;
         _currentDirection = Direction.right;
+
+        _frac = 0f;
 	}
 	
 	// Update is called once per frame
@@ -131,11 +144,25 @@ public class Player : MonoBehaviour {
     {
         if (GameManager.GameRunnning)
         {
-            _animator.SetBool("Walk", true);
-            if (Input.GetKeyDown(KeyCode.LeftArrow))
-            {
-                _animator.SetBool("Walk", false);
-                _currentState = State.stationary;
+            switch (_currentWalkingState) {
+                case WalkingState.walking:
+                    _animator.SetBool("Walk", true);
+                    _rb.velocity = Vector3.Lerp(Vector3.zero, Vector3.right * Speed, _frac);
+                    _frac += 0.1f;
+                    if (Input.GetKeyDown(KeyCode.LeftArrow))
+                    {
+                        _currentWalkingState = WalkingState.slowing;
+                        _frac = 0;
+                    }
+                 break;
+
+                case WalkingState.slowing:
+                    _rb.velocity = Vector3.Lerp(Vector3.right * Speed, Vector3.zero, _frac);
+      
+                    break;
+                    
+                        //_animator.SetBool("Walk", false);
+                        //_currentState = State.stationary; 
             }
         }
     }
