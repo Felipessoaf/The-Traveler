@@ -47,7 +47,7 @@ public class Player : MonoBehaviour {
     // Use this for initialization
     void Start ()
     {
-        _rb = gameObject.GetComponent<Rigidbody>();
+        _rb = transform.parent.gameObject.GetComponent<Rigidbody>();
         _currentState = State.menuWalk;
         _currentDirection = Direction.right;
         _frac = 0f;
@@ -149,7 +149,7 @@ public class Player : MonoBehaviour {
             switch (_currentWalkingState) {
                 case WalkingState.walking:
                     _animator.SetBool("Walk", true);
-                    _rb.velocity = Vector3.Lerp(Vector3.zero, Vector3.right * Speed, _frac);
+                    _rb.velocity = Vector3.Lerp(Vector3.zero, transform.right * Speed, _frac);
                     _frac += 0.1f;
                     if (Input.GetKeyDown(KeyCode.LeftArrow))
                     {
@@ -160,7 +160,7 @@ public class Player : MonoBehaviour {
                  break;
 
                 case WalkingState.slowing:
-                    _rb.velocity = Vector3.Lerp(Vector3.right * Speed, Vector3.zero, _frac);
+                    _rb.velocity = Vector3.Lerp(transform.right * Speed, Vector3.zero, _frac);
                     _frac += 0.1f;
                     if (_frac >= 1f)
                     {
