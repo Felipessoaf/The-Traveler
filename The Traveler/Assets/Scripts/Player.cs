@@ -49,7 +49,6 @@ public class Player : MonoBehaviour {
         _rb = gameObject.GetComponent<Rigidbody>();
         _currentState = State.menuWalk;
         _currentDirection = Direction.right;
-
         _frac = 0f;
 	}
 	
@@ -153,16 +152,29 @@ public class Player : MonoBehaviour {
                     {
                         _currentWalkingState = WalkingState.slowing;
                         _frac = 0;
+                        Debug.Log("parando");
                     }
                  break;
 
                 case WalkingState.slowing:
                     _rb.velocity = Vector3.Lerp(Vector3.right * Speed, Vector3.zero, _frac);
-      
+                    _frac += 0.1f;
+                    if (_frac >= 1f)
+                    {
+                        _currentWalkingState = WalkingState.stop;
+                        Debug.Log("parado");
+                    }
                     break;
-                    
-                        //_animator.SetBool("Walk", false);
-                        //_currentState = State.stationary; 
+
+                case WalkingState.stop:
+                    _animator.SetBool("Walk", false);
+                    _currentState = State.stationary;
+                    _currentWalkingState = WalkingState.walking;
+                    break;
+
+                default:
+                    //_currentWalkingState = WalkingState.walking;
+                    break;
             }
         }
     }
