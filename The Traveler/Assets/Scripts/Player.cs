@@ -40,6 +40,7 @@ public class Player : MonoBehaviour {
 
     #region public variables
     public float Speed;
+    public Vector3 Velocity;
 
     #endregion
 
@@ -55,6 +56,8 @@ public class Player : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
+        Velocity = _rb.velocity;
+
 		switch(_currentState)
         {
             case State.menuWalk:
