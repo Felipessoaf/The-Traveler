@@ -36,6 +36,7 @@ public class Player : MonoBehaviour {
     private Animator _animator;
     private float _frac;
     private bool _moving;
+    private WaypointDirections _wpd = null;
     #endregion
 
     #region public variables
@@ -81,6 +82,11 @@ public class Player : MonoBehaviour {
     void MenuWalk()
     {
         
+    }
+
+    void InitialSteps() {
+        _currentState = State.walking;
+        CamCtrl.FollowPlayer();
     }
 
     void Stationary()
@@ -204,4 +210,17 @@ public class Player : MonoBehaviour {
         _animator.SetBool("TurnRight", false);
         _currentState = State.walking;
     }
+
+
+    private void OnTriggerEnter(Collider other)
+    {
+        Debug.Log("a");
+        if (other.tag == "Waypoint")
+        {
+            Debug.Log("b");
+            _wpd = other.gameObject.GetComponent<WaypointDirections>();
+            _currentState = State.stationary;           
+        }
+    }
+
 }
