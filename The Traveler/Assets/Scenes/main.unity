@@ -2194,6 +2194,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 1482612516}
+  - component: {fileID: 1482612518}
   - component: {fileID: 1482612517}
   m_Layer: 0
   m_Name: PlayerHolder
@@ -2231,6 +2232,21 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 80
   m_CollisionDetection: 0
+--- !u!114 &1482612518
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1482612515}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 660f9f5e0e6123747a52e37d9f06f6ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animator: {fileID: 1584135102}
+  Speed: 1
+  Velocity: {x: 0, y: 0, z: 0}
+  CamCtrl: {fileID: 1919705118}
 --- !u!1 &1534996091
 GameObject:
   m_ObjectHideFlags: 0
@@ -2325,6 +2341,8 @@ GameObject:
   - component: {fileID: 1584135101}
   - component: {fileID: 1584135102}
   - component: {fileID: 1584135103}
+  - component: {fileID: 1584135104}
+  - component: {fileID: 1584135105}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -2379,6 +2397,33 @@ MonoBehaviour:
   Speed: 1
   Velocity: {x: 0, y: 0, z: 0}
   CamCtrl: {fileID: 1919705118}
+--- !u!54 &1584135104
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1584135100}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!65 &1584135105
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1584135100}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &1634661381
 Prefab:
   m_ObjectHideFlags: 0
@@ -2421,6 +2466,10 @@ Prefab:
     - target: {fileID: 1477754522034674, guid: ae04f3f302128c74b908a88855d9deaa, type: 2}
       propertyPath: m_Name
       value: Waypoint1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4274319507964954, guid: ae04f3f302128c74b908a88855d9deaa, type: 2}
+      propertyPath: m_LocalScale.y
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ae04f3f302128c74b908a88855d9deaa, type: 2}
@@ -2762,7 +2811,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2017265125}
   - component: {fileID: 2017265124}
-  - component: {fileID: 2017265123}
   - component: {fileID: 2017265122}
   m_Layer: 0
   m_Name: Body
@@ -2805,18 +2853,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!65 &2017265123
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2017265121}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!33 &2017265124
 MeshFilter:
   m_ObjectHideFlags: 0
