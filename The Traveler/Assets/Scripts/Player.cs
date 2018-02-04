@@ -96,6 +96,7 @@ public class Player : MonoBehaviour {
     {
         if (GameManager.GameRunnning)
         {
+            transform.parent.gameObject.GetComponentInChildren<Drifter>().SetMove(false);
             Debug.Log("Stationary");
             if(Input.GetKeyDown(KeyCode.RightArrow) && _wpd.East)
             {
@@ -156,6 +157,7 @@ public class Player : MonoBehaviour {
     {
         if (GameManager.GameRunnning)
         {
+            transform.parent.gameObject.GetComponentInChildren<Drifter>().SetMove(true);
             switch (_currentWalkingState) {
                 case WalkingState.walking:
                     _animator.SetBool("Walk", true);
