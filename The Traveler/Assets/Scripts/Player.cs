@@ -37,6 +37,8 @@ public class Player : MonoBehaviour {
     private float _frac;
     private bool _moving;
     private WaypointDirections _wpd = null;
+    private Vector3 _currentPosition = Vector3.zero;
+    private Vector3 _currentWaypointDestination = Vector3.zero;
     #endregion
 
     #region public variables
@@ -50,6 +52,7 @@ public class Player : MonoBehaviour {
     void Start ()
     {
         _rb = transform.parent.gameObject.GetComponent<Rigidbody>();
+        //_rb = transform.GetComponent<Rigidbody>();
         _currentState = State.menuWalk;
         _currentDirection = Direction.right;
         _frac = 0f;
@@ -94,7 +97,7 @@ public class Player : MonoBehaviour {
         if (GameManager.GameRunnning)
         {
             Debug.Log("Stationary");
-            if(Input.GetKeyDown(KeyCode.RightArrow))
+            if(Input.GetKeyDown(KeyCode.RightArrow) && _wpd.East)
             {
                 if(_currentDirection != Direction.right)
                 {
@@ -107,7 +110,7 @@ public class Player : MonoBehaviour {
                     _currentState = State.walking;
                 }
             }
-            else if(Input.GetKeyDown(KeyCode.UpArrow))
+            else if(Input.GetKeyDown(KeyCode.UpArrow) && _wpd.North)
             {
                 if (_currentDirection != Direction.up)
                 {
@@ -120,7 +123,7 @@ public class Player : MonoBehaviour {
                     _currentState = State.walking;
                 }
             }
-            else if (Input.GetKeyDown(KeyCode.LeftArrow))
+            else if (Input.GetKeyDown(KeyCode.LeftArrow) && _wpd.West)
             {
                 if (_currentDirection != Direction.left)
                 {
@@ -133,7 +136,7 @@ public class Player : MonoBehaviour {
                     _currentState = State.walking;
                 }
             }
-            else if (Input.GetKeyDown(KeyCode.DownArrow))
+            else if (Input.GetKeyDown(KeyCode.DownArrow) && _wpd.South)
             {
                 if (_currentDirection != Direction.down)
                 {
@@ -167,9 +170,11 @@ public class Player : MonoBehaviour {
                  break;
 
                 case WalkingState.slowing:
-                    _rb.velocity = Vector3.Lerp(transform.right * Speed, Vector3.zero, _frac);
-                    _frac += 0.1f;
-                    if (_frac >= 1f)
+                    Vector3 auxVector = Vector3.Lerp(_currentPosition, _currentWaypointDestination, _frac);
+                    transform.parent.position = new Vector3(auxVector.x, transform.parent.position.y, auxVector.z);
+                    Debug.Log(_frac);
+                    _frac += 0.01f;
+                    if (_frac >= 1.05f)
                     {
                         _rb.velocity = Vector3.zero;
                         _currentWalkingState = WalkingState.stop;
@@ -219,7 +224,15 @@ public class Player : MonoBehaviour {
         {
             Debug.Log("b");
             _wpd = other.gameObject.GetComponent<WaypointDirections>();
-            _currentState = State.stationary;           
+            _rb.velocity = Vector3.zero;
+            _currentState = State.walking;
+            _currentWalkingState = WalkingState.slowing;
+            _currentPosition = transform.position;
+            _currentWaypointDestination = other.transform.position;
+            Debug.Log(_currentWaypointDestination);
+            Debug.Log(_currentPosition);
+            _frac = 0f;
+            
         }
     }
 
