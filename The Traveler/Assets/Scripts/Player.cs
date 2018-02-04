@@ -43,8 +43,13 @@ public class Player : MonoBehaviour {
     public float Speed;
     public Vector3 Velocity;
     public CamController CamCtrl;
-
+    public static Player PlayerInstance;
     #endregion
+
+    private void Awake()
+    {
+        PlayerInstance = this;
+    }
 
     // Use this for initialization
     void Start ()
@@ -93,7 +98,14 @@ public class Player : MonoBehaviour {
     {
         if (GameManager.GameRunnning)
         {
-            transform.parent.gameObject.GetComponentInChildren<Drifter>().SetMove(false);
+            foreach(Transform t in transform.parent)
+            {
+                if(t.GetComponent<Drifter>())
+                {
+                    t.GetComponent<Drifter>().SetMove(false);
+                }
+            }
+
             Debug.Log("Stationary");
             if(Input.GetKeyDown(KeyCode.RightArrow))
             {
@@ -154,7 +166,13 @@ public class Player : MonoBehaviour {
     {
         if (GameManager.GameRunnning)
         {
-            transform.parent.gameObject.GetComponentInChildren<Drifter>().SetMove(true);
+            foreach (Transform t in transform.parent)
+            {
+                if (t.GetComponent<Drifter>())
+                {
+                    t.GetComponent<Drifter>().SetMove(true);
+                }
+            }
             switch (_currentWalkingState) {
                 case WalkingState.walking:
                     _animator.SetBool("Walk", true);

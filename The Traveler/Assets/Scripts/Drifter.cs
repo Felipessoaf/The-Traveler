@@ -19,4 +19,9 @@ public class Drifter : MonoBehaviour {
     {
         Anim.SetBool("moving", moving);
     }
+
+    public void EndEventAnimation()
+    {
+        transform.parent = Player.PlayerInstance.gameObject.transform;
+    }
 }
