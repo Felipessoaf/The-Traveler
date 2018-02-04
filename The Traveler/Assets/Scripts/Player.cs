@@ -165,6 +165,7 @@ public class Player : MonoBehaviour {
                     _frac += 0.1f;
                     if (_frac >= 1f)
                     {
+                        _rb.velocity = Vector3.zero;
                         _currentWalkingState = WalkingState.stop;
                         Debug.Log("parado");
                     }
